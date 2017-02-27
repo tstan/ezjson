@@ -1,5 +1,5 @@
 # ezjson - still a work in progress as of 02/27/17
-An easier to use JSON library for JSON.
+An easier to use JSON library for Java.
 Information from http://www.json.org.
 
 Intended compliance with http://www.ietf.org/rfc/rfc4627.txt
