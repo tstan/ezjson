@@ -7,6 +7,7 @@ import java.io.OutputStreamWriter;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Information from www.json.org:
@@ -16,19 +17,19 @@ import java.util.Map;
  * Each name is followed by : (colon) and the name/value pairs are separated by , (comma).
  */
 public class JsonObject {
-    private HashMap<String, Object> attributes;
+    private TreeMap<String, Object> attributes;
 
     public JsonObject() {
-        attributes = new HashMap<>();
+        attributes = new TreeMap<>();
     }
 
     public JsonObject(Object key, Object value) {
-        attributes = new HashMap<>();
+        attributes = new TreeMap<>();
         add(key, value);
     }
 
     public JsonObject(HashMap<Object, Object> map) {
-        attributes = new HashMap<>();
+        attributes = new TreeMap<>();
         for (Map.Entry<Object, Object> entry : map.entrySet()) {
             add(entry.getKey(), entry.getValue());
         }
@@ -44,10 +45,6 @@ public class JsonObject {
         if (Util.isValidValue(value)) {
             attributes.put(key.toString(), value);
         }
-    }
-
-    public String toStringPretty() {
-        return "";
     }
 
     public String tabDepth(int depth) {
@@ -102,6 +99,10 @@ public class JsonObject {
         }
     }
 
+    public String toStringPretty() {
+        return valueString(this, 0);
+    }
+
     public static void main(String[] args) {
         JsonObject jsonObject = new JsonObject();
         jsonObject.add("integer$!", 2);
@@ -119,6 +120,15 @@ public class JsonObject {
         jsonObject1.add("nested", jsonObject2);
         jsonObject1.add("2nd Object", jsonObject3);
         jsonObject.add("object?", jsonObject1);
+
+        System.out.println(jsonObject.toStringPretty());
+
+        JsonObject myObj = new JsonObject();
+        myObj.add("attribute1", "value1");
+        myObj.add("attribute2", "value2");
+        myObj.add("attribute3", "value3");
+
+        System.out.println(myObj.toStringPretty());
 
         jsonObject.saveToFile("test.json");
     }
